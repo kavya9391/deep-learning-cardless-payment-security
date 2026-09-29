@@ -1,0 +1,181 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block contents %}
+<style>
+/* FORM CONTAINER */
+.txn-wrapper{
+    display:flex;
+    justify-content:center;
+    padding:40px 20px;
+}
+
+.txn-card{
+    width:100%;
+    max-width:520px;
+    padding:35px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 20px 45px rgba(0,0,0,0.6);
+}
+
+/* TITLE */
+.txn-card h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#00ffae;
+    font-size:1.6rem;
+}
+
+/* FORM GROUP */
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:0.9rem;
+    color:#cbd5e1;
+}
+
+/* INPUTS */
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(0,0,0,0.45);
+    color:#ffffff;
+    outline:none;
+    transition:0.3s;
+}
+
+.form-group input[readonly]{
+    opacity:0.8;
+    cursor:not-allowed;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+    color:#94a3b8;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#00ffae;
+    box-shadow:0 0 10px rgba(0,255,174,0.6);
+}
+
+/* BUTTONS */
+.btn-group{
+    display:flex;
+    gap:16px;
+    margin-top:25px;
+}
+
+.btn-primary{
+    flex:1;
+    padding:13px;
+    border:none;
+    border-radius:30px;
+    font-weight:600;
+    cursor:pointer;
+    background:linear-gradient(90deg,#00f5ff,#00ffae);
+    color:#020617;
+    transition:0.3s;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(0,255,174,0.6);
+}
+
+.btn-secondary{
+    flex:1;
+    padding:13px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.2);
+    color:#ffffff;
+    transition:0.3s;
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,0.35);
+}
+
+/* MESSAGES */
+.msg-error{
+    margin-top:18px;
+    text-align:center;
+    color:#fca5a5;
+}
+
+.msg-success{
+    margin-top:18px;
+    text-align:center;
+    color:#22c55e;
+}
+</style>
+
+<div class="txn-wrapper">
+    <div class="txn-card">
+
+        <h2>Send Money</h2>
+
+        <form action="{% url 'user_transaction' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Your User ID</label>
+                <input type="text" name="sender_id" value="{{ loginid }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Recipient User ID</label>
+                <select name="recipient_id" required>
+                    <option value="">Select Recipient User</option>
+                    {% for i in users %}
+                        <option value="{{ i.loginid }}">{{ i.loginid }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Amount to Send</label>
+                <input type="number" name="amount" step="0.01" min="1" placeholder="e.g. 250.00" required>
+            </div>
+
+            <div class="form-group">
+                <label>Remarks (optional)</label>
+                <textarea name="remarks" rows="3" placeholder="Purpose or note..."></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn-primary">Send Money</button>
+                <button type="reset" class="btn-secondary">Reset</button>
+            </div>
+
+            {% if messages %}
+            <div class="msg-error">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if msg %}
+            <div class="msg-success">{{ msg }}</div>
+            {% endif %}
+        </form>
+
+    </div>
+</div>
+{% endblock %}

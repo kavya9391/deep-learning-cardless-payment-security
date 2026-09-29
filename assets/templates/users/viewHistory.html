@@ -1,0 +1,121 @@
+{% extends 'users/userbase.html'%}
+{%load static%}
+{%block contents%}
+
+<style>
+/* TABLE WRAPPER */
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+    margin-top:20px;
+}
+
+/* TITLE */
+.table-title{
+    text-align:center;
+    font-size:2rem;
+    font-weight:600;
+    margin-bottom:25px;
+    color:#00ffae;
+}
+
+/* TABLE BASE */
+.txn-table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 20px 45px rgba(0,0,0,0.5);
+}
+
+/* TABLE HEADER */
+.txn-table thead{
+    background:linear-gradient(90deg,#00f5ff,#00ffae);
+}
+
+.txn-table th{
+    padding:14px 12px;
+    text-align:center;
+    font-size:0.95rem;
+    font-weight:600;
+    color:#020617;
+    letter-spacing:0.4px;
+}
+
+/* TABLE BODY */
+.txn-table td{
+    padding:13px 12px;
+    text-align:center;
+    font-size:0.9rem;
+    color:#e5e7eb;
+    border-top:1px solid rgba(255,255,255,0.08);
+}
+
+/* ZEBRA STRIPES */
+.txn-table tbody tr:nth-child(even){
+    background:rgba(255,255,255,0.03);
+}
+
+/* HOVER EFFECT */
+.txn-table tbody tr:hover{
+    background:rgba(0,255,174,0.12);
+    transition:0.25s ease;
+}
+
+/* AMOUNT COLUMN */
+.txn-table td.amount{
+    font-weight:600;
+    color:#22c55e;
+}
+
+/* TRANSACTION ID */
+.txn-table td.txnid{
+    font-family:monospace;
+    font-size:0.85rem;
+    color:#93c5fd;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .txn-table th,
+    .txn-table td{
+        font-size:0.8rem;
+        padding:10px;
+    }
+}
+</style>
+
+<div class="table-wrapper">
+
+    <div class="table-title">Transaction History</div>
+
+    <table class="txn-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Sender Name</th>
+                <th>Amount</th>
+                <th>Message</th>
+                <th>Transaction Date</th>
+                <th>Transaction ID</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.sender_id }}</td>
+                <td class="amount">₹ {{ i.amount }}</td>
+                <td>{{ i.remarks }}</td>
+                <td>{{ i.cdate }}</td>
+                <td class="txnid">{{ i.transaction_id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

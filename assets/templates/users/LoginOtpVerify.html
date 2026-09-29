@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify OTP - Secure Financial Transactions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(-45deg,#0f172a,#020617,#0b1120,#111827);
+    background-size:400% 400%;
+    animation:bgMove 15s ease infinite;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* ================= HEADER ================= */
+header{
+    text-align:center;
+    padding:60px 20px 25px;
+}
+
+header h1{
+    font-size:2.5rem;
+    font-weight:700;
+    background:linear-gradient(90deg,#00f5ff,#00ffae);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+header p{
+    margin-top:10px;
+    color:#cbd5e1;
+}
+
+/* ================= NAVBAR ================= */
+nav{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    padding:18px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,0.1);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+nav a{
+    text-decoration:none;
+    color:#ffffff;
+    font-weight:500;
+    position:relative;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#00ffae;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0%;
+    height:2px;
+    background:#00ffae;
+    transition:.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* ================= OTP CONTAINER ================= */
+.otp-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:70px 20px;
+}
+
+.otp-card{
+    width:100%;
+    max-width:420px;
+    padding:40px;
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(25px);
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 25px 50px rgba(0,0,0,0.6);
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.otp-card h2{
+    text-align:center;
+    margin-bottom:8px;
+    color:#00ffae;
+}
+
+.otp-card p{
+    text-align:center;
+    font-size:.9rem;
+    color:#cbd5e1;
+    margin-bottom:30px;
+}
+
+/* ================= INPUTS ================= */
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(0,0,0,0.45);
+    color:#fff;
+    outline:none;
+    transition:.3s;
+    text-align:center;
+    font-size:1.2rem;
+    letter-spacing:5px;
+}
+
+.input-group input::placeholder{
+    color:#94a3b8;
+    letter-spacing:normal;
+}
+
+.input-group input:focus{
+    border-color:#00ffae;
+    box-shadow:0 0 12px rgba(0,255,174,0.6);
+}
+
+/* ================= BUTTONS ================= */
+.btn-group{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:25px;
+}
+
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-verify{
+    background:linear-gradient(90deg,#00f5ff,#00ffae);
+    color:#020617;
+}
+
+.btn-verify:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,255,174,0.6);
+}
+
+.btn-back{
+    background:rgba(255,255,255,0.2);
+    color:#fff;
+}
+
+.btn-back:hover{
+    background:rgba(255,255,255,0.35);
+}
+
+/* ================= MESSAGES ================= */
+.msg{
+    margin-top:20px;
+    text-align:center;
+    color:#22c55e;
+    font-size:.9rem;
+}
+
+.timer{
+    text-align:center;
+    margin-top:15px;
+    color:#fbbf24;
+    font-size:.85rem;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    nav{flex-direction:column;gap:15px}
+    header h1{font-size:2rem}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Machine Learning Based Secure Cardless Financial Transactions</h1>
+    <p>Multi-Factor Authentication • AI Fraud Detection • Secure Payments</p>
+</header>
+
+<nav>
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'UserLogin' %}">User Login</a>
+    <a href="{% url 'AdminLogin' %}">Admin</a>
+    <a href="{% url 'UserRegister' %}">Register</a>
+</nav>
+
+<div class="otp-wrapper">
+    <div class="otp-card">
+        <h2>Verify OTP</h2>
+        <p>Enter the 6-digit code sent to your email</p>
+
+        <form action="{% url 'LoginOtpVerify' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <input type="text" name="otp" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required>
+            </div>
+
+            <div class="timer">
+                OTP valid for 2 minutes
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn-verify">Verify & Login</button>
+                <a href="{% url 'UserLogin' %}"><button type="button" class="btn-back">Back</button></a>
+            </div>
+
+            {% if messages %}
+            <div class="msg">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning Based Secure Cardless Financial Transactions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(-45deg,#0f172a,#020617,#0b1120,#111827);
+    background-size:400% 400%;
+    animation:bgMove 15s ease infinite;
+    color:#fff;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* ================= HEADER ================= */
+header{
+    text-align:center;
+    padding:55px 20px 25px;
+}
+
+header h1{
+    font-size:2.3rem;
+    font-weight:700;
+    background:linear-gradient(90deg,#00f5ff,#00ffae);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* ================= NAVBAR ================= */
+nav{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    padding:18px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,0.1);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+nav a{
+    text-decoration:none;
+    color:#ffffff;
+    font-weight:500;
+    position:relative;
+    transition:.3s;
+}
+
+nav a:hover{ color:#00ffae; }
+
+nav a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#00ffae;
+    transition:.3s;
+}
+
+nav a:hover::after{ width:100%; }
+
+/* ================= MAIN CONTAINER ================= */
+.container{
+    max-width:1200px;
+    margin:50px auto;
+    padding:45px;
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(25px);
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 25px 50px rgba(0,0,0,0.6);
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* ================= FOOTER ================= */
+footer{
+    text-align:center;
+    padding:18px;
+    margin-top:50px;
+    font-size:.9rem;
+    color:#94a3b8;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    nav{flex-direction:column;gap:15px}
+    header h1{font-size:1.9rem}
+    .container{padding:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Machine Learning Based Secure Cardless Financial Transactions</h1>
+</header>
+
+<nav>
+    <a href="{% url 'UserHome' %}">Home</a>
+    <a href="{% url 'user_transaction' %}">Transaction</a>
+    <a href="{% url 'viewHistory' %}">History</a>
+    <a href="{% url 'index' %}">Logout</a>
+</nav>
+
+<div class="container">
+    {% block contents %}
+    <!-- User page content goes here -->
+    {% endblock %}
+</div>
+
+<footer>
+    © 2025 Secure Transactions Research | All Rights Reserved
+</footer>
+
+</body>
+</html>

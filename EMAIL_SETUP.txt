@@ -1,0 +1,46 @@
+EMAIL OTP LOGIN SETUP INSTRUCTIONS
+===================================
+
+1. UPDATE EMAIL CREDENTIALS
+   Open: users/views.py
+   Find the UserLoginCheck function (around line 100)
+   Replace these lines:
+
+   sender_email = "your_email@gmail.com"  # Replace with your Gmail address
+   sender_password = "your_app_password"  # Replace with your Gmail App Password
+
+   HOW TO GET GMAIL APP PASSWORD:
+   - Go to your Google Account settings
+   - Enable 2-Step Verification
+   - Go to Security > 2-Step Verification > App passwords
+   - Generate a new app password for "Mail"
+   - Copy the 16-character password and use it in the code
+
+2. RUN DATABASE MIGRATIONS
+   Open terminal in project directory and run:
+
+   python manage.py makemigrations
+   python manage.py migrate
+
+3. TEST THE LOGIN FLOW
+   - Start the server: python manage.py runserver
+   - Go to User Login page
+   - Enter a registered email address
+   - Check your email for the 6-digit OTP
+   - Enter the OTP within 2 minutes
+   - You will be logged in successfully
+
+FEATURES IMPLEMENTED:
+- Email-based login (no password required at login)
+- 6-digit OTP generation
+- OTP sent via SMTP (Gmail)
+- OTP valid for 2 minutes only
+- Automatic OTP expiry check
+- Session management after successful verification
+- User-friendly error messages
+
+SECURITY NOTES:
+- Old OTPs are automatically deleted when new ones are generated
+- Used OTPs are deleted after successful login
+- Expired OTPs (>2 minutes) are rejected
+- Only activated accounts can receive OTP
